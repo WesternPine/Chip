@@ -1,0 +1,2 @@
+# Chip
+Chat leveling bot.
