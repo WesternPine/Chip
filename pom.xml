@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>proj.chip</groupId>
   <artifactId>Chip</artifactId>
-  <version>1</version>
+  <version>2</version>
   <name>Chip</name>
 
 	<repositories>

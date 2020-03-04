@@ -3,9 +3,13 @@ package proj.chip.listener;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -51,7 +55,7 @@ public class CommandListener extends ListenerAdapter {
                     if(event.getMessage().getMentionedUsers().size() > 0) {
                         target = event.getMessage().getMentionedUsers().get(0).getId();
                     } else {
-                        //error no tagges member
+                        //error no tagged member
                         event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.RED).setDescription(Emoji.CrossMark + " **Please tag the user!**").build()).queue();
                     }
                 }
@@ -65,10 +69,7 @@ public class CommandListener extends ListenerAdapter {
                 builder.setColor(Color.PINK);
                 
                 User targetUser = Chip.getInstance().getManager().getUserById(target);
-                builder.setThumbnail(targetUser.getAvatarUrl());
-                builder.setDescription(targetUser.getAsMention() + " **Chip Information.**");
-                
-                builder.addBlankField(false);
+                builder.setAuthor(targetUser.getName() + "#" + targetUser.getDiscriminator() + " Chip Information", null, targetUser.getAvatarUrl());
                 builder.addField("Chips:", "`" + level + "`", true);
                 builder.addField("Words Typed:", "`" + words + "` Words", true);
                 builder.addField("Until Next chip:", "`" + Levels.untilNextLevel(words) + "` More Words", true);
@@ -80,6 +81,42 @@ public class CommandListener extends ListenerAdapter {
                 
             }
             
+            if(message.startsWith(prefix + "oc")) {
+                if(!event.getMember().hasPermission(Permission.MANAGE_SERVER))
+                    return;
+                
+                if(message.contains(" ") && message.split(" ").length >= 2) {
+                    
+                    if(message.startsWith(prefix + "oc off")) {
+                        Chip.getInstance().getBackend().setOutput(event.getGuild().getId(), Optional.empty());
+                        event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.PINK).setDescription(Emoji.Pencil2 + " **Output channel turned off!**").build()).queue();
+                        return;
+                    }
+                    
+                    List<TextChannel> channels = event.getMessage().getMentionedChannels();
+                    if(channels.isEmpty() || channels.size() > 1) {
+                        event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.RED).setDescription(Emoji.CrossMark + " **Please use the tag of a single channel!**").build()).queue();
+                    }
+                    
+                    Chip.getInstance().getBackend().setOutput(event.getGuild().getId(), Optional.of(channels.get(0).getIdLong()));
+                    event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.PINK).setDescription(Emoji.Pencil2 + " **Output channel set to:** " + channels.get(0).getAsMention()).build()).queue();
+                    
+                } else {
+                    boolean anyChannel = true;
+                    Optional<Long> oc = Chip.getInstance().getBackend().getOutput(event.getGuild().getId());
+                    if(!oc.isPresent())
+                        anyChannel = false;
+                    else
+                        anyChannel = event.getGuild().getTextChannelById(oc.get()) == null;
+                    
+                    
+                    if(anyChannel) {
+                        event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.PINK).setDescription(Emoji.Pencil2 + " **Output channel off!**").build()).queue();
+                    } else {
+                        event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.PINK).setDescription(Emoji.Pencil2 + " **Current output channel:** " + event.getGuild().getTextChannelById(oc.get()).getAsMention()).build()).queue();
+                    }
+                }
+            }
         }
     }
     

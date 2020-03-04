@@ -45,6 +45,7 @@ public class Backend {
     public void synchronizeUsers(String guild) {
         Set<String> dbUsers = getUsers(guild).keySet();
         Chip.getInstance().getManager().getGuildById(guild).getMembers().forEach(member -> dbUsers.remove(member.getUser().getId()));
+        dbUsers.remove("bot");
         dbUsers.forEach(user -> deleteUser(guild, user));
     }
     
@@ -115,6 +116,24 @@ public class Backend {
             }
         }
         return top;
+    }
+    
+    public void setOutput(String guild, Optional<Long> channel) {
+        sql.update("DELETE FROM `" + guild + "` WHERE user=?;", "bot");
+        if(channel.isPresent())
+            sql.update("INSERT INTO `" + guild + "` VALUES (?,?);", "bot", channel.get());
+    }
+    
+    public Optional<Long> getOutput(String guild){
+        Optional<Object> channel = sql.query(rs -> {
+            try {
+                if(rs.next()) {
+                    return rs.getLong("words");
+                }
+            } catch (Exception e) {}
+            return null;
+        }, "SELECT * FROM `" + guild + "` WHERE user=?;", "bot");
+        return channel.isPresent() ? Optional.of((Long) channel.get()) : Optional.empty();
     }
 
 }
