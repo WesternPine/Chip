@@ -41,6 +41,9 @@ public class Chip {
          * Start via configuration file.
          */
         config = Config.builder().configType(ConfigType.YAML).fileName("ChipConfig.yml").updating(true).build();
+        
+        System.out.println(config.getFile().getAbsolutePath().toString());
+        
         instance = new Chip();
         instance.init((String) config.get("Token", "Bot-Token-Here"));
         return;

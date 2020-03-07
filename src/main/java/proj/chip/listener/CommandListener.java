@@ -1,8 +1,8 @@
 package proj.chip.listener;
 
 import java.awt.Color;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -26,37 +26,35 @@ public class CommandListener extends ListenerAdapter {
         String message = event.getMessage().getContentRaw();
         if(message.startsWith(prefix)) {
             if(message.startsWith(prefix + "levels") || message.startsWith(prefix + "chips") || message.startsWith(prefix + "top")) {
-                
-                LinkedHashMap<String, Long> top = Chip.getInstance().getBackend().getTopUsers(event.getGuild().getId());
-                
-                int limit = 5;
+                LinkedHashMap<String, Long> top = Chip.getInstance().getBackend().getUsersTop(event.getGuild().getId(), 5);
                 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setColor(Color.PINK);
                 builder.setTitle("Top Overall Chatters:");
+                
                 StringBuilder string = new StringBuilder();
-                Iterator<Entry<String, Long>> it = top.entrySet().iterator();
+                LinkedList<Entry<String, Long>> entries = new LinkedList<>();
+                top.entrySet().forEach(en -> entries.offerLast(en));
+                int limit = 5;
                 for(int i = 0; i < limit; i++) {
-                    if(it.hasNext()) {
-                        Entry<String, Long> entry = it.next();
-                        string.append("`" + (i+1) + "`. **[" + Levels.getLevel(Chip.getInstance().getBackend().getWordCount(event.getGuild().getId(), entry.getKey())) + "]**" + Chip.getInstance().getManager().getUserById(entry.getKey()).getAsMention() + " >> *" + entry.getValue() + " Words* \n\n");
-                    }
+                    if(i > entries.size()-1)
+                        break;
+                    Entry<String, Long> entry = entries.get(i);
+                    string.append("`" + (i+1) + "`. **[" + Levels.getLevel(Chip.getInstance().getBackend().getWordCount(event.getGuild().getId(), entry.getKey())) + "]**" + Chip.getInstance().getManager().getUserById(entry.getKey()).getAsMention() + " >> *" + entry.getValue() + " Words* \n\n");
                 }
                 builder.setDescription(string.toString());
+                
                 event.getChannel().sendMessage(builder.build()).queue();
                 
-                
-            }
-            
-            if(message.startsWith(prefix + "chip") || message.startsWith(prefix + "level")) {
+            } else if(message.startsWith(prefix + "chip") || message.startsWith(prefix + "level")) {
                 String guild = event.getGuild().getId();
                 String target = event.getMessage().getAuthor().getId();
                 if(message.contains(" ")) {
                     if(event.getMessage().getMentionedUsers().size() > 0) {
                         target = event.getMessage().getMentionedUsers().get(0).getId();
                     } else {
-                        //error no tagged member
                         event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.RED).setDescription(Emoji.CrossMark + " **Please tag the user!**").build()).queue();
+                        return;
                     }
                 }
                 
@@ -78,10 +76,7 @@ public class CommandListener extends ListenerAdapter {
                 builder.setFooter("Requested By: " + author.getName() + "#" + author.getDiscriminator(), author.getAvatarUrl());
                 
                 event.getChannel().sendMessage(builder.build()).queue();
-                
-            }
-            
-            if(message.startsWith(prefix + "oc")) {
+            } else if(message.startsWith(prefix + "oc")) {
                 if(!event.getMember().hasPermission(Permission.MANAGE_SERVER))
                     return;
                 
@@ -96,6 +91,7 @@ public class CommandListener extends ListenerAdapter {
                     List<TextChannel> channels = event.getMessage().getMentionedChannels();
                     if(channels.isEmpty() || channels.size() > 1) {
                         event.getChannel().sendMessage(new EmbedBuilder().setColor(Color.RED).setDescription(Emoji.CrossMark + " **Please use the tag of a single channel!**").build()).queue();
+                        return;
                     }
                     
                     Chip.getInstance().getBackend().setOutput(event.getGuild().getId(), Optional.of(channels.get(0).getIdLong()));
@@ -105,7 +101,7 @@ public class CommandListener extends ListenerAdapter {
                     boolean anyChannel = true;
                     Optional<Long> oc = Chip.getInstance().getBackend().getOutput(event.getGuild().getId());
                     if(!oc.isPresent())
-                        anyChannel = false;
+                        anyChannel = true;
                     else
                         anyChannel = event.getGuild().getTextChannelById(oc.get()) == null;
                     

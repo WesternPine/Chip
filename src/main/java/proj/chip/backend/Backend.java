@@ -82,40 +82,43 @@ public class Backend {
     
     @SuppressWarnings("unchecked")
     public HashMap<String, Long> getUsers(String guild){
-//        synchronizeUsers(guild);
         Optional<Object> users = sql.query(rs -> {
             HashMap<String, Long> result = new HashMap<>();
             try {
-                while(rs.next())
-                    result.put(rs.getString("user"), rs.getLong("words"));
+                while(rs.next()) {
+                    String user = rs.getString("user");
+                    long amt = rs.getLong("words");
+                    if(user!="bot")
+                        result.put(user, amt);
+                }
             } catch (Exception e) {}
             return result;
         }, "SELECT * FROM `" + guild + "`;");
         return (HashMap<String, Long>) users.get();
     }
     
-    public LinkedHashMap<String, Long> getTopUsers(String guild) {
-        HashMap<String, Long> users = getUsers(guild);
-        LinkedHashMap<String, Long> top = new LinkedHashMap<>();
-        String most = "";
-        long max = 0;
-        for(String user : users.keySet()) {
-            long sent = users.get(user);
-            if(sent >= max) {
-                most = user;
-                max = sent;
-            }
-        }
-        if(most.equals(""))
-            return top;
-        for(long i = max; top.size() < users.size(); i--) {
-            for(String user : users.keySet()) {
-                if(users.get(user) == i) {
-                    top.put(user, i);
+    @SuppressWarnings("unchecked")
+    public LinkedHashMap<String, Long> getUsersTop(String guild, int top){
+        Optional<Object> users = sql.query(rs -> {
+            LinkedHashMap<String, Long> result = new LinkedHashMap<>();
+            try {
+                while(rs.next()) {
+                    if(result.size() >= top) {
+                        System.out.println(result.size() + " >= " + top);
+                        break;
+                    }
+                    
+                    String user = rs.getString("user");
+                    long amt = rs.getLong("words");
+                    if(!user.equals("bot"))
+                        result.put(user, amt);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
-        return top;
+            return result;
+        }, "SELECT user, words FROM `" + guild + "` ORDER BY words DESC LIMIT " + (top+1) + ";");
+        return (LinkedHashMap<String, Long>) users.get();
     }
     
     public void setOutput(String guild, Optional<Long> channel) {
