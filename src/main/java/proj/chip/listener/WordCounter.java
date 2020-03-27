@@ -13,10 +13,10 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 
 import lombok.SneakyThrows;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import proj.api.marble.lib.emoji.Emoji;
 import proj.chip.Chip;
 import proj.chip.utility.Levels;
@@ -93,7 +93,9 @@ public class WordCounter extends ListenerAdapter {
         TextChannel ch = toSend.isPresent() ? Chip.getInstance().getManager().getTextChannelById(toSend.get()) : event.getChannel();
         boolean any = toSend.isPresent() ? ch != null ? false : true : true;
         
-        (any ? event.getChannel() : ch).sendFile(output.toByteArray(), "FriendChipLevel.png", new MessageBuilder(Emoji.Tada + " " + event.getAuthor().getAsMention() + " Leveled Up!").build()).complete();
+        (any ? event.getChannel() : ch).sendFile(output.toByteArray(), "FriendChipLevel.png").complete();
+        (any ? event.getChannel() : ch).sendMessage(new MessageBuilder(Emoji.Tada + " " + event.getAuthor().getAsMention() + " Leveled Up!").build()).complete();
+        
     }
     
 }

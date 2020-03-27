@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
 
-import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.api.JDA;
 import proj.api.marble.builders.sql.DatabaseType;
 import proj.api.marble.builders.sql.SQL;
 import proj.chip.Chip;

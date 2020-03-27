@@ -3,8 +3,11 @@ package proj.chip;
 import javax.security.auth.login.LoginException;
 
 import lombok.Getter;
-import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
-import net.dv8tion.jda.bot.sharding.ShardManager;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import proj.api.marble.builders.config.Config;
 import proj.api.marble.builders.config.ConfigType;
 import proj.chip.backend.Backend;
@@ -75,8 +78,10 @@ public class Chip {
          * If unable to launch bot, return error and exit program.
          */
         try {
-            DefaultShardManagerBuilder builder = new DefaultShardManagerBuilder();
-            builder.setToken(token);
+            DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
+            builder.enableIntents(GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MESSAGES);
+            builder.enableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
+            builder.setChunkingFilter(ChunkingFilter.ALL);
             builder.addEventListeners(new CommandListener());
             builder.addEventListeners(new GuildJoin());
             builder.addEventListeners(new GuildLeave());

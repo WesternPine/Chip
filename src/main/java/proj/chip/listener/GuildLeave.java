@@ -1,7 +1,7 @@
 package proj.chip.listener;
 
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import proj.chip.Chip;
 
 public class GuildLeave extends ListenerAdapter {

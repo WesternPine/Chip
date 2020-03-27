@@ -2,14 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>proj.chip</groupId>
   <artifactId>Chip</artifactId>
-  <version>3</version>
+  <version>4</version>
   <name>Chip</name>
 
 	<repositories>
 		<repository>
-			<id>central</id>
-			<name>bintray</name>
-			<url>http://jcenter.bintray.com</url>
+			<id>jcenter</id>
+			<name>jcenter-bintray</name>
+			<url>https://jcenter.bintray.com</url>
 		</repository>
 
 		<repository>
@@ -22,13 +22,7 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>3.7.1_388</version>
-			<exclusions>
-				<exclusion>
-					<groupId>club.minnced</groupId>
-					<artifactId>opus-java</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>4.1.1_126</version>
 		</dependency>
 
 		<dependency>
@@ -42,8 +36,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.16</version>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
