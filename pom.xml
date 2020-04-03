@@ -59,7 +59,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>proj.chip.Chip</mainClass>
+							<mainClass>dev.westernpine.Chip</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -71,7 +71,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>proj.chip.Chip</mainClass>
+							<mainClass>dev.westernpine.Chip</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
