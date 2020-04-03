@@ -1,8 +1,8 @@
-package proj.chip.listener;
+package dev.westernpine.listener;
 
+import dev.westernpine.Chip;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import proj.chip.Chip;
 
 public class GuildJoin extends ListenerAdapter {
     

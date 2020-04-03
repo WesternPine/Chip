@@ -1,10 +1,15 @@
-package proj.chip.listener;
+package dev.westernpine.listener;
 
 import java.awt.Color;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+
+import dev.westernpine.Chip;
+import dev.westernpine.backend.Backend;
+import dev.westernpine.utility.Levels;
+
 import java.util.Optional;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -14,9 +19,6 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import proj.api.marble.lib.emoji.Emoji;
-import proj.chip.Chip;
-import proj.chip.backend.Backend;
-import proj.chip.utility.Levels;
 
 public class CommandListener extends ListenerAdapter {
 

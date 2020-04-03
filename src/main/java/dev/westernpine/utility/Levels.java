@@ -1,4 +1,4 @@
-package proj.chip.utility;
+package dev.westernpine.utility;
 
 public class Levels {
 

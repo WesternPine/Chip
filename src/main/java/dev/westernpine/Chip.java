@@ -1,7 +1,15 @@
-package proj.chip;
+package dev.westernpine;
 
 import javax.security.auth.login.LoginException;
 
+import dev.westernpine.backend.Backend;
+import dev.westernpine.listener.CommandListener;
+import dev.westernpine.listener.GuildJoin;
+import dev.westernpine.listener.GuildLeave;
+import dev.westernpine.listener.MemberLeave;
+import dev.westernpine.listener.StartupListener;
+import dev.westernpine.listener.WordCounter;
+import dev.westernpine.utility.Output;
 import lombok.Getter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -10,14 +18,6 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import proj.api.marble.builders.config.Config;
 import proj.api.marble.builders.config.ConfigType;
-import proj.chip.backend.Backend;
-import proj.chip.listener.CommandListener;
-import proj.chip.listener.GuildJoin;
-import proj.chip.listener.GuildLeave;
-import proj.chip.listener.MemberLeave;
-import proj.chip.listener.StartupListener;
-import proj.chip.listener.WordCounter;
-import proj.chip.utility.Output;
 
 public class Chip {
 

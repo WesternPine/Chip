@@ -1,4 +1,4 @@
-package proj.chip.listener;
+package dev.westernpine.listener;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,14 +12,14 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import dev.westernpine.Chip;
+import dev.westernpine.utility.Levels;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import proj.api.marble.lib.emoji.Emoji;
-import proj.chip.Chip;
-import proj.chip.utility.Levels;
 
 public class WordCounter extends ListenerAdapter {
 

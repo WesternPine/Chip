@@ -1,8 +1,8 @@
-package proj.chip.listener;
+package dev.westernpine.listener;
 
+import dev.westernpine.Chip;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import proj.chip.Chip;
 
 public class StartupListener extends ListenerAdapter {
     
