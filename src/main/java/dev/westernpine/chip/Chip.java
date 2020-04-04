@@ -1,15 +1,15 @@
-package dev.westernpine;
+package dev.westernpine.chip;
 
 import javax.security.auth.login.LoginException;
 
-import dev.westernpine.backend.Backend;
-import dev.westernpine.listener.CommandListener;
-import dev.westernpine.listener.GuildJoin;
-import dev.westernpine.listener.GuildLeave;
-import dev.westernpine.listener.MemberLeave;
-import dev.westernpine.listener.StartupListener;
-import dev.westernpine.listener.WordCounter;
-import dev.westernpine.utility.Output;
+import dev.westernpine.chip.backend.Backend;
+import dev.westernpine.chip.listener.CommandListener;
+import dev.westernpine.chip.listener.GuildJoin;
+import dev.westernpine.chip.listener.GuildLeave;
+import dev.westernpine.chip.listener.MemberLeave;
+import dev.westernpine.chip.listener.StartupListener;
+import dev.westernpine.chip.listener.WordCounter;
+import dev.westernpine.chip.utility.Output;
 import lombok.Getter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;

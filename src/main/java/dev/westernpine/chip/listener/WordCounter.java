@@ -1,4 +1,4 @@
-package dev.westernpine.listener;
+package dev.westernpine.chip.listener;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,8 +12,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
-import dev.westernpine.Chip;
-import dev.westernpine.utility.Levels;
+import dev.westernpine.chip.Chip;
+import dev.westernpine.chip.utility.Levels;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;

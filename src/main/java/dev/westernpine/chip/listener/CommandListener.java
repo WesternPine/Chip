@@ -1,4 +1,4 @@
-package dev.westernpine.listener;
+package dev.westernpine.chip.listener;
 
 import java.awt.Color;
 import java.util.LinkedHashMap;
@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import dev.westernpine.Chip;
-import dev.westernpine.backend.Backend;
-import dev.westernpine.utility.Levels;
+import dev.westernpine.chip.Chip;
+import dev.westernpine.chip.backend.Backend;
+import dev.westernpine.chip.utility.Levels;
 
 import java.util.Optional;
 

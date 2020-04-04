@@ -1,6 +1,6 @@
-package dev.westernpine.listener;
+package dev.westernpine.chip.listener;
 
-import dev.westernpine.Chip;
+import dev.westernpine.chip.Chip;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 

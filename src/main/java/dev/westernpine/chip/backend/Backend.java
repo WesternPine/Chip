@@ -1,11 +1,11 @@
-package dev.westernpine.backend;
+package dev.westernpine.chip.backend;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
 
-import dev.westernpine.Chip;
+import dev.westernpine.chip.Chip;
 import net.dv8tion.jda.api.JDA;
 import proj.api.marble.builders.sql.DatabaseType;
 import proj.api.marble.builders.sql.SQL;
