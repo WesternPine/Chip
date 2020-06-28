@@ -100,7 +100,6 @@ public class Chip {
         }
         
         Output.success("Bot startup completed.");
-
     }
 
 }
